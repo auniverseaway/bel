@@ -83,3 +83,8 @@ body {
     margin: 0px;
     font-family: GothamPro;
 }
+
+.home-hero {
+    opacity: 0.01;
+    transition: opacity .2s ease-in-out;
+}
