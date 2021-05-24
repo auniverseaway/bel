@@ -1,7 +1,5 @@
-import getObjectProperty from '/scripts/getObjectProperty.js';
-
 // Scaffold our page object
-const page = {};
+window.page = {};
 page.blocks = {
     '.home-hero': {
         location: '/blocks/home-hero/',
@@ -10,22 +8,12 @@ page.blocks = {
     'footer': {
         location: '/blocks/footer/',
         styles: 'styles.css',
-        scripts: 'scripts.js',
-        init: 'window.bel.blocks.footer.init',
     },
-    '.dx-Accordion': {
-        location: '/blocks/accordion/',
+    '.client-carousel': {
+        location: '/blocks/client-carousel/',
         styles: 'styles.css',
         scripts: 'scripts.js',
-        dependencies: ['/scripts/react.js', '/scripts/react-dom.js'],
-        init: 'bel.blocks.accordion.init',
-    },
-    '.embed': {
-        location: '',
-        styles: 'https://www.adobe.com/express/blocks/embed/embed.css',
-        scripts: 'https://www.adobe.com/express/blocks/embed/embed.js',
-        init: 'bel.blocks.accordion.init',
-    },
+    }
 };
 
 const addCss = (location) => {
@@ -35,41 +23,36 @@ const addCss = (location) => {
     document.querySelector('head').appendChild(element);
 };
 
-const addJs = (location) => {
-    var element = document.createElement('script');
-    element.setAttribute('type', 'module');
-    element.setAttribute('src', location);
-    document.querySelector('head').appendChild(element);
-};
-
-const initJs = (element, block) => {
-    const promise = getObjectProperty(block.init, 1000);
-    promise.then(initFunc => {
-        initFunc(element);
-    });
+const initJs = async (element, block) => {
+    // If the block scripts haven't been loaded, load them.
+    if (block.scripts && !block.loaded) {
+        const module = await import(`${block.location}${block.scripts}`);
+        if (block.scripts && module.default) {
+            block.module = module;
+            block.module.default(element);
+        };
+        return true;
+    }
+    // If this block type has scripts and they're already loaded
+    if (block.scripts && block.loaded) {
+        block.module.default(element);
+    }
+    return true;
 };
 
 /**
- * Unlazy each type of image (picture, background, img)
+ * Unlazy each type of block
  * @param {HTMLElement} element
  */
-const loadElement = (element) => {
+const loadElement = async (element) => {
     const { blockSelect } = element.dataset;
     const block = page.blocks[blockSelect];
-    // Inject CSS and JS to work
-    if (!block.loaded) {
-        if (block.styles) {
-            addCss(`${block.location}${block.styles}`);
-        }
-        if (block.scripts) {
-            addJs(`${block.location}${block.scripts}`);
-        }
+    // Inject CSS
+    if (!block.loaded && block.styles) {
+        addCss(`${block.location}${block.styles}`);
     }
     // Run JS against element
-    if (block.scripts) {
-        initJs(element, block);
-    }
-    block.loaded = true;
+    block.loaded = await initJs(element, block);
 };
 
 /**
