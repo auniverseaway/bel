@@ -13,6 +13,11 @@ page.blocks = {
         location: '/blocks/client-carousel/',
         styles: 'styles.css',
         scripts: 'scripts.js',
+    },
+    'a[href^="https://www.youtube.com"]': {
+        location: '/blocks/embed/',
+        styles: 'youtube.css',
+        scripts: 'youtube.js',
     }
 };
 
@@ -73,7 +78,7 @@ const onIntersection = (entries, observer) => {
  * Lazily load images using an Intersection Observer.
  * @param {HTMLElement} element
  */
-const lazyLoadElements = (element) => {
+const blockLoader = (element) => {
     let parent = element;
     if (element instanceof HTMLDocument) {
         parent = document.querySelector('body');
@@ -93,4 +98,4 @@ const lazyLoadElements = (element) => {
     return observer;
 };
 
-lazyLoadElements(document);
+blockLoader(document);
