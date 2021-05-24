@@ -1,6 +1,6 @@
 .home-hero {
     opacity: 1;
-    background: linear-gradient(45deg, rgba(189,41,106,1) 0%, rgba(231,88,71,1) 100%);
+    background: linear-gradient(90deg, #e54f3a, #b71d64);
     overflow: hidden;
     color: #FFF;
     position: relative;
