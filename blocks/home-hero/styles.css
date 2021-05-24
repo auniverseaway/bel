@@ -7,7 +7,7 @@
 }
 
 .home-hero h1 {
-    font-size: 80px;
+    font-size: 48px;
     line-height: 1;
     margin-bottom: 0;
     text-transform: uppercase;
@@ -69,5 +69,10 @@
 @media only screen and (min-width: 1440px) {
     .home-hero > div:first-of-type > div {
         max-width: 1200px;
+    }
+
+    .home-hero h1 {
+        font-size: 80px;
+        max-width: 680px;
     }
 }
