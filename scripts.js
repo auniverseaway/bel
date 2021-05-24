@@ -1,3 +1,5 @@
+import getObjectProperty from '/scripts/getObjectProperty.js';
+
 // Scaffold our page object
 const page = {};
 page.blocks = {
@@ -10,30 +12,21 @@ page.blocks = {
         styles: 'styles.css',
         scripts: 'scripts.js',
         init: 'window.bel.blocks.footer.init',
-    }
+    },
+    '.dx-Accordion': {
+        location: '/blocks/accordion/',
+        styles: 'styles.css',
+        scripts: 'scripts.js',
+        dependencies: ['/scripts/react.js', '/scripts/react-dom.js'],
+        init: 'bel.blocks.accordion.init',
+    },
+    '.embed': {
+        location: '',
+        styles: 'https://www.adobe.com/express/blocks/embed/embed.css',
+        scripts: 'https://www.adobe.com/express/blocks/embed/embed.js',
+        init: 'bel.blocks.accordion.init',
+    },
 };
-
-const getProperty = (object, objectPath) => {
-    const pathArray = objectPath.split('.');
-    return pathArray.reduce((acc, part) => acc && acc[part], object);
-};
-
-const getObjectProperty = (toggleKey, timeout) => new Promise((resolve) => {
-    let i = 0;
-    const interval = 100;
-    const refreshId = setInterval(() => {
-        const prop = getProperty(window, toggleKey);
-        // Use not null in case 'false' is the prop.
-        if (prop !== null && typeof prop !== 'undefined') {
-            resolve(prop);
-            clearInterval(refreshId);
-        } else if (i >= timeout) {
-            resolve(null);
-            clearInterval(refreshId);
-        }
-        i += interval;
-    }, interval);
-});
 
 const addCss = (location) => {
     var element = document.createElement('link');
