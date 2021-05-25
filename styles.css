@@ -78,7 +78,7 @@
     font-display: swap;
 }
 
-
+/* General Styles */
 body {
     margin: 0px;
     font-family: GothamPro;
@@ -86,7 +86,7 @@ body {
     color: #424242;
 }
 
-a {
+main a {
     color: #ec008c;
     text-decoration: none;
     line-height: 38px;
@@ -95,6 +95,20 @@ a {
     border-radius: 21px;
     border: 2px solid;
 }
+/* General Styles */
+
+/* Header */
+header {
+    background-color: #FFF;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    box-shadow: 0 0 36px 0 rgb(22 25 28 / 17%);
+    z-index: 100000000;
+}
+
 
 .home-hero {
     height: 100vh;
@@ -129,12 +143,12 @@ ol {
     padding-left: 60px;
 }
 
-li {
+ol li {
     position: relative;
     margin-bottom: 22px;
 }
 
-li:before {
+ol li:before {
     counter-increment: section;
     content: counter(section);
     color: #ec008c;
@@ -160,9 +174,17 @@ div[class*="two-columns"] > div > div:last-of-type p {
     position: relative;
 }
 
+div[class*="two-columns"] > div > div:last-of-type p:last-of-type {
+    justify-content: center;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
 a[href^="https://www.youtube.com"] {
     padding-bottom: 56.25%;
     border: unset;
     font-size: 8px;
     display: block;
+    visibility: hidden;
 }

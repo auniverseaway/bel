@@ -1,6 +1,10 @@
-// Scaffold our page object
 window.page = {};
 page.blocks = {
+    'header': {
+        location: '/blocks/header/',
+        styles: 'styles.css',
+        scripts: 'scripts.js',
+    },
     '.home-hero': {
         location: '/blocks/home-hero/',
         styles: 'styles.css',

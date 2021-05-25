@@ -1,0 +1,31 @@
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+}
+
+nav > p > a {
+    display: block;
+    background: url('/img/eu-logo.svg') no-repeat;
+    text-indent: 1000px;
+    overflow: hidden;
+    width: 42px;
+    height: 40px;
+} 
+
+nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+nav li a {
+    color: #424242;
+    padding: 24px 0;
+    margin-left: 24px;
+    text-decoration: none;
+}
