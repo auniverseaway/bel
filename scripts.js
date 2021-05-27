@@ -22,6 +22,10 @@ page.blocks = {
         location: '/blocks/embed/',
         styles: 'youtube.css',
         scripts: 'youtube.js',
+    },
+    '.experience-fragment': {
+        location: '/blocks/xf/',
+        scripts: 'scripts.js',
     }
 };
 

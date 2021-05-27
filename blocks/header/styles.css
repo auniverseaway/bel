@@ -1,5 +1,5 @@
 nav {
-    max-width: 1200px;
+    max-width: 83.4%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -28,4 +28,10 @@ nav li a {
     padding: 24px 0;
     margin-left: 24px;
     text-decoration: none;
+}
+
+@media only screen and (min-width: 1440px) {
+    nav {
+        max-width: 1200px;
+    }
 }
