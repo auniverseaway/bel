@@ -189,7 +189,7 @@ a[href^="https://www.youtube.com"] {
     visibility: hidden;
 }
 
-/* XF */
-.experience-fragment {
+/* Fragment */
+.fragment {
     visibility: hidden;
 }
