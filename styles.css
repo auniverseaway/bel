@@ -95,7 +95,11 @@ main a {
     border-radius: 21px;
     border: 2px solid;
 }
-/* General Styles */
+
+img {
+    max-width: 100%;
+}
+/* End General Styles */
 
 /* Header */
 header {
@@ -192,4 +196,11 @@ a[href^="https://www.youtube.com"] {
 /* Fragment */
 .fragment {
     visibility: hidden;
+    opacity: 0;
+    transition: opacity 400ms;
+}
+
+.fragment.is-Visible {
+    visibility: visible;
+    opacity: 1;
 }

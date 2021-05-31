@@ -1,46 +1,15 @@
-const config = {
-    blocks: {
-        'header': {
-            location: '/blocks/header/',
-            styles: 'styles.css',
-            scripts: 'scripts.js',
-        },
-        '.home-hero': {
-            location: '/blocks/home-hero/',
-            styles: 'styles.css',
-        },
-        'footer': {
-            location: '/blocks/footer/',
-            styles: 'styles.css',
-        },
-        'a[href^="https://www.youtube.com"]': {
-            location: '/blocks/embed/',
-            styles: 'youtube.css',
-            scripts: 'youtube.js',
-        },
-        '.fragment': {
-            location: '/blocks/fragment/',
-            scripts: 'scripts.js',
-        }
-    },
-    deps: {
-        'react': {
-            location: 'https://unpkg.com/',
-            scripts: ['react@17/umd/react.development.js', 'react-dom@17/umd/react-dom.development.js'],
-        }
-    },
-};
+const blockLoader = (config, suppliedEl) => {
+    const parentEl = suppliedEl || document;
 
-const blockLoader = (element, config) => {
     const addStyle = (location) => {
-        var element = document.createElement('link');
+        const element = document.createElement('link');
         element.setAttribute('rel', 'stylesheet');
         element.setAttribute('href', location);
         document.querySelector('head').appendChild(element);
     };
 
     const addScript = (location) => {
-        var element = document.createElement('script');
+        const element = document.createElement('script');
         element.setAttribute('crossorigin', true);
         element.setAttribute('src', location);
         document.querySelector('head').appendChild(element);
@@ -112,32 +81,81 @@ const blockLoader = (element, config) => {
             }
         });
     };
-    
+
     /**
-     * Lazily load images using an Intersection Observer.
+     * Lazily load blocks using an Intersection Observer.
      * @param {HTMLElement} element
      */
     const init = (element) => {
-        let parent = element;
-        if (element instanceof HTMLDocument) {
-            parent = document.querySelector('body');
-        }
-    
-        const options = { rootMargin: '200px 0px' };
+        const isDoc = element instanceof HTMLDocument;
+        const parent = isDoc ? document.querySelector('body') : element;
+
+        const options = { rootMargin: config.margin || '1000px 0px' };
         const observer = new IntersectionObserver(onIntersection, options);
-    
+
         Object.keys(config.blocks).forEach((selector) => {
             const elements = parent.querySelectorAll(selector);
-            elements.forEach((element) => {
-                element.dataset.blockSelect = selector;
-                observer.observe(element);
+            elements.forEach((el) => {
+                el.dataset.blockSelect = selector;
+                !isDoc || config.eager ? loadElement(el) : observer.observe(el);
             });
         });
-    
-        return observer;
     };
 
-    init(element);
+    const fetchFragment = async (path) => {
+        const resp = await fetch(`${path}.plain.html`);
+        if (resp.ok) {
+            return await resp.text();
+        }
+        return null;
+    };
+    
+    const loadFragment = async (fragmentEl) => {
+        const path = fragmentEl.querySelector('div > div').textContent;
+        const html = await fetchFragment(path);
+        if (html) {
+            fragmentEl.insertAdjacentHTML('beforeend', html);
+            fragmentEl.querySelector('div').remove();
+            fragmentEl.classList.add('is-Visible');
+            init(fragmentEl);
+        }
+    };
+
+    /**
+     * Add fragment to the list of blocks
+     */
+    config.blocks['.fragment'] = {
+        loaded: true,
+        scripts: {},
+        module: {
+            default: loadFragment,
+        }
+    };
+
+    init(parentEl);
 }
 
-blockLoader(document, config);
+const config = {
+    blocks: {
+        'header': {
+            location: '/blocks/header/',
+            styles: 'styles.css',
+            scripts: 'scripts.js',
+        },
+        '.home-hero': {
+            location: '/blocks/home-hero/',
+            styles: 'styles.css',
+        },
+        'footer': {
+            location: '/blocks/footer/',
+            styles: 'styles.css',
+        },
+        'a[href^="https://www.youtube.com"]': {
+            location: '/blocks/embed/',
+            styles: 'youtube.css',
+            scripts: 'youtube.js',
+        },
+    },
+};
+
+blockLoader(config);
