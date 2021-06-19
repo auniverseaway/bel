@@ -1,2 +1,193 @@
-((e,t)=>{const s=t||document,o=e=>{const t=document.createElement("link");t.setAttribute("rel","stylesheet"),t.setAttribute("href",e),document.querySelector("head").appendChild(t)},c=e=>{e.styles&&e.styles.forEach((t=>{o(`${e.location}${t}`)})),e.scripts&&e.scripts.forEach((t=>{(e=>{const t=document.createElement("script");t.setAttribute("crossorigin",!0),t.setAttribute("src",e),document.querySelector("head").appendChild(t)})(`${e.location}${t}`)})),e.loaded=!0},r=async t=>{const{blockSelect:s}=t.dataset,r=e.blocks[s];r.deps&&r.deps.forEach((async t=>{const s=e.deps[t];s.loaded||c(s)})),!r.loaded&&r.styles&&o(`${r.location}${r.styles}`),r.loaded=await(async(e,t)=>(t.scripts&&(t.module||(t.module=await import(`${t.location}${t.scripts}`)),t.module&&t.module.default(e)),!0))(t,r)},l=(e,t)=>{e.forEach((e=>{e.isIntersecting&&(t.unobserve(e.target),r(e.target))}))},a=t=>{const s=t instanceof HTMLDocument,o=s?document.querySelector("body"):t,c={rootMargin:e.margin||"1000px 0px"},a=new IntersectionObserver(l,c);Object.keys(e.blocks).forEach((t=>{o.querySelectorAll(t).forEach((o=>{o.setAttribute("data-block-select",t),!s||e.eager?r(o):a.observe(o)}))}))};e.blocks[".fragment"]={loaded:!0,scripts:{},module:{default:async e=>{const t=e.querySelector("div > div").textContent,s=await(async e=>{const t=await fetch(`${e}.plain.html`);return t.ok?t.text():null})(t);s&&(e.insertAdjacentHTML("beforeend",s),e.querySelector("div").remove(),e.classList.add("is-Visible"),a(e))}}},a(s)})({blocks:{header:{location:"/blocks/header/",styles:"styles.css",scripts:"scripts.js"},".home-hero":{location:"/blocks/home-hero/",styles:"styles.css"},footer:{location:"/blocks/footer/",styles:"styles.css"},'a[href^="https://www.youtube.com"]':{location:"/blocks/embed/",styles:"youtube.css",scripts:"youtube.js"}}});
-//# sourceMappingURL=scripts.js.map
+const blockLoader = (config, suppliedEl) => {
+    const parentEl = suppliedEl || document;
+
+    const addStyle = (location) => {
+        const element = document.createElement('link');
+        element.setAttribute('rel', 'stylesheet');
+        element.setAttribute('href', location);
+        document.querySelector('head').appendChild(element);
+    };
+
+    const addScript = (location) => {
+        const element = document.createElement('script');
+        element.setAttribute('crossorigin', true);
+        element.setAttribute('src', location);
+        document.querySelector('head').appendChild(element);
+    };
+
+    const addDep = (dep) => {
+        if (dep.styles) {
+            dep.styles.forEach((style) => {
+                addStyle(`${dep.location}${style}`);
+            });
+        }
+        if (dep.scripts) {
+            dep.scripts.forEach((script) => {
+                addScript(`${dep.location}${script}`);
+            });
+        }
+        // eslint-disable-next-line no-param-reassign
+        dep.loaded = true;
+    };
+
+    const initJs = async (element, block) => {
+        // If the block scripts haven't been loaded, load them.
+        if (block.scripts) {
+            if (!block.module) {
+                /* eslint-disable-next-line */
+                block.module = await import(`${block.location}${block.scripts}`);
+            }
+            // If this block type has scripts and they're already loaded
+            if (block.module) {
+                block.module.default(element);
+            }
+        }
+        return true;
+    };
+
+    /**
+     * Unlazy each type of block
+     * @param {HTMLElement} element
+     */
+    const loadElement = async (element) => {
+        const { blockSelect } = element.dataset;
+        const block = config.blocks[blockSelect];
+        // Load any block dependencies
+        if (block.deps) {
+            block.deps.forEach(async (dep) => {
+                const depConfig = config.deps[dep];
+                if (!depConfig.loaded) {
+                    addDep(depConfig);
+                }
+            });
+        }
+
+        // Inject CSS
+        if (!block.loaded && block.styles) {
+            addStyle(`${block.location}${block.styles}`);
+        }
+        // Run JS against element
+        block.loaded = await initJs(element, block);
+    };
+
+    /**
+     * Iterate through all entries to determine if they are intersecting.
+     * @param {IntersectionObserverEntry} entries
+     * @param {IntersectionObserver} observer
+     */
+    const onIntersection = (entries, observer) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                observer.unobserve(entry.target);
+                loadElement(entry.target);
+            }
+        });
+    };
+
+    /**
+     * Load blocks
+     * @param {HTMLElement} element
+     */
+    const init = (element) => {
+        const isDoc = element instanceof HTMLDocument;
+        const parent = isDoc ? document.querySelector('body') : element;
+
+        let observer;
+        if (isDoc && config.lazy) {
+            const options = { rootMargin: config.margin || '1000px 0px' };
+            observer = new IntersectionObserver(onIntersection, options);
+        }
+
+        // Clean up variant classes
+        // Assumption: "Marquee (Small, Contained) turns into marquee--small--contained-"
+        const variantBlocks = parent.querySelectorAll('[class$="-"]');
+        variantBlocks.forEach((variant) => {
+            let { className } = variant;
+            className = className.slice(0, -1);
+            // eslint-disable-next-line no-param-reassign
+            variant.className = '';
+            const classNames = className.split('--');
+            variant.classList.add(...classNames);
+        });
+
+        Object.keys(config.blocks).forEach((selector) => {
+            const elements = parent.querySelectorAll(selector);
+            elements.forEach((el) => {
+                el.setAttribute('data-block-select', selector);
+                if (isDoc && config.lazy) {
+                    observer.observe(el);
+                } else {
+                    loadElement(el);
+                }
+            });
+        });
+    };
+
+    const fetchFragment = async (path) => {
+        const resp = await fetch(`${path}.plain.html`);
+        if (resp.ok) {
+            return resp.text();
+        }
+        return null;
+    };
+
+    const loadFragment = async (fragmentEl) => {
+        const path = fragmentEl.querySelector('div > div').textContent;
+        const html = await fetchFragment(path);
+        if (html) {
+            fragmentEl.insertAdjacentHTML('beforeend', html);
+            fragmentEl.querySelector('div').remove();
+            fragmentEl.classList.add('is-Visible');
+            init(fragmentEl);
+        }
+    };
+
+    /**
+     * Add fragment to the list of blocks
+     */
+    // eslint-disable-next-line no-param-reassign
+    config.blocks['.fragment'] = {
+        loaded: true,
+        scripts: {},
+        module: {
+            default: loadFragment,
+        },
+    };
+
+    init(parentEl);
+};
+
+const config = {
+    lazy: true,
+    margin: '100px 0px',
+    blocks: {
+        'header': {
+            location: '/blocks/header/',
+            styles: 'styles.css',
+            scripts: 'scripts.js',
+        },
+        '.home-hero': {
+            location: '/blocks/home-hero/',
+            styles: 'styles.css',
+        },
+        'footer': {
+            location: '/blocks/footer/',
+            styles: 'styles.css',
+        },
+        'a[href^="https://www.youtube.com"]': {
+            location: '/blocks/embed/',
+            styles: 'youtube.css',
+            scripts: 'youtube.js',
+        },
+        '.accordion': {
+            location: '/blocks/accordion/',
+            styles: 'styles.css',
+        },
+        '.marquee': {
+            location: '/blocks/marquee/',
+            styles: 'styles.css',
+        }
+    },
+};
+
+blockLoader(config);
