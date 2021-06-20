@@ -120,11 +120,38 @@ header {
     transition: opacity .2s ease-in-out;
 }
 
-div[class*="two-columns"] {
-    padding: 60px 0px;
+/* Aside for homepage */
+.aside {
+    padding: 56px 0;
 }
 
-div[class*="two-columns"] > div > div:last-of-type {
+/* Heading */
+.aside > div:first-of-type {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.aside > div:first-of-type p {
+    margin: 0 0 36px 0;
+}
+
+.aside > div:first-of-type > div:last-of-type {
+    display: none;
+}
+
+h2 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.aside > div:last-of-type > div:last-of-type {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+}
+
+.aside > div > div:last-of-type {
     position: relative;
     display: flex;
     justify-content: center;
@@ -133,12 +160,24 @@ div[class*="two-columns"] > div > div:last-of-type {
     flex-wrap: wrap;
 }
 
-div[class*="--contained-"] > div {
+.contained > div:last-of-type {
     max-width: 83.4%;
     margin: 0 auto;
     display: grid;
     column-gap: 48px;
     row-gap: 48px;
+}
+
+.two-columns > div > div:last-of-type p {
+    width: 100%;
+    position: relative;
+}
+
+.two-columns > div > div:last-of-type p:last-of-type {
+    justify-content: center;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
 ol {
@@ -167,22 +206,10 @@ ol li:before {
 }
 
 @media only screen and (min-width: 1440px) {
-    div[class*="--contained-"] > div {
+    .contained > div:last-of-type {
         max-width: 1200px;
         grid-template-columns: 1fr 1fr;
     }
-}
-
-div[class*="two-columns"] > div > div:last-of-type p {
-    width: 100%;
-    position: relative;
-}
-
-div[class*="two-columns"] > div > div:last-of-type p:last-of-type {
-    justify-content: center;
-    display: inline-flex;
-    flex-wrap: wrap;
-    gap: 12px;
 }
 
 a[href^="https://www.youtube.com"] {
