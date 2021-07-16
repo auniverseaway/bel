@@ -1,3 +1,242 @@
+@font-face {
+    font-family: GothamPro;
+    src: url(/fonts/GothamPro-Light.woff2) format("woff2");
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+  
+@font-face {
+    font-family: GothamPro;
+    src: url(/fonts/GothamPro-LightItalic.woff2);
+    font-weight: 100;
+    font-style: italic;
+    font-display: swap;
+}
+  
+@font-face {
+    font-family: GothamPro;
+    src: url(/fonts/GothamPro.woff2) format("woff2");
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: GothamPro;
+    src: url(/fonts/GothamPro-Italic.woff2) format("woff2");
+    font-weight: 200;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: GothamPro;
+    src: url(/fonts/GothamPro-Medium.woff2) format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: GothamPro;
+    src: url(/fonts/GothamPro-MediumItalic.woff2) format("woff2");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: GothamPro;
+    src: url(/fonts/GothamPro-Bold.woff2) format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: GothamPro;
+    src: url(/fonts/GothamPro-BoldItalic.woff2) format("woff2");
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: GothamPro;
+    src: url(/fonts/GothamPro-Black.woff2) format("woff2");
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: GothamPro;
+    src: url(/fonts/GothamPro-BlackItalic.woff2) format("woff2");
+    font-weight: 800;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* General Styles */
 body {
     margin: 0px;
+    font-family: GothamPro;
+    line-height: 1.6;
+    color: #424242;
+}
+
+main a {
+    color: #ec008c;
+    text-decoration: none;
+    line-height: 38px;
+    display: inline-block;
+    padding: 0 20px;
+    border-radius: 21px;
+    border: 2px solid;
+}
+
+img {
+    max-width: 100%;
+}
+
+[data-block-select] {
+    opacity: 0;
+    transition: opacity 200ms;
+}
+
+[data-block-select].is-Loaded {
+    opacity: 1;
+}
+/* End General Styles */
+
+/* Header */
+header {
+    background-color: #FFF;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    box-shadow: 0 0 36px 0 rgb(22 25 28 / 17%);
+    z-index: 100000000;
+}
+
+
+.home-hero {
+    height: 100vh;
+    opacity: 0.01;
+    transition: opacity .2s ease-in-out;
+}
+
+/* Aside for homepage */
+.aside {
+    padding: 56px 0;
+}
+
+/* Heading */
+.aside > div:first-of-type {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.aside > div:first-of-type p {
+    margin: 0 0 36px 0;
+}
+
+.aside > div:first-of-type > div:last-of-type {
+    display: none;
+}
+
+h2 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.aside > div:last-of-type > div:last-of-type {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+}
+
+.aside > div > div:last-of-type {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.contained > div:last-of-type {
+    max-width: 83.4%;
+    margin: 0 auto;
+    display: grid;
+    column-gap: 48px;
+    row-gap: 48px;
+}
+
+.two-columns > div > div:last-of-type p {
+    width: 100%;
+    position: relative;
+}
+
+.two-columns > div > div:last-of-type p:last-of-type {
+    justify-content: center;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+ol {
+    counter-reset: section;
+    list-style-type: none;
+    padding-left: 60px;
+}
+
+ol li {
+    position: relative;
+    margin-bottom: 22px;
+}
+
+ol li:before {
+    counter-increment: section;
+    content: counter(section);
+    color: #ec008c;
+    position: absolute;
+    left: -64px;
+    font-size: 58px;
+    top: 2px;
+    line-height: 1;
+    width: 48px;
+    text-align: right;
+    font-weight: 700;
+}
+
+@media only screen and (min-width: 1440px) {
+    .contained > div:last-of-type {
+        max-width: 1200px;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+a[href^="https://www.youtube.com"] {
+    padding-bottom: 56.25%;
+    border: unset;
+    font-size: 8px;
+    display: block;
+    visibility: hidden;
+}
+
+/* Fragment */
+.fragment {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 200ms;
+}
+
+.fragment.is-Visible {
+    visibility: visible;
+    opacity: 1;
 }

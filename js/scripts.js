@@ -8,19 +8,40 @@ const blockLoader = (config, suppliedEl) => {
         document.querySelector('head').appendChild(element);
     };
 
+    const addScript = (location) => {
+        const element = document.createElement('script');
+        element.setAttribute('crossorigin', true);
+        element.setAttribute('src', location);
+        document.querySelector('head').appendChild(element);
+    };
+
+    const addDep = (dep) => {
+        if (dep.styles) {
+            dep.styles.forEach((style) => {
+                addStyle(`${dep.location}${style}`);
+            });
+        }
+        if (dep.scripts) {
+            dep.scripts.forEach((script) => {
+                addScript(`${dep.location}${script}`);
+            });
+        }
+        // eslint-disable-next-line no-param-reassign
+        dep.loaded = true;
+    };
+
     const initJs = async (element, block) => {
         // If the block scripts haven't been loaded, load them.
         if (block.scripts) {
             if (!block.module) {
-                // eslint-disable-next-line no-param-reassign
+                /* eslint-disable-next-line */
                 block.module = await import(`${block.location}${block.scripts}`);
             }
-            // If this block type has scripts and they're already imported
+            // If this block type has scripts and they're already loaded
             if (block.module) {
                 block.module.default(element);
             }
         }
-        element.classList.add('is-Loaded');
         return true;
     };
 
@@ -31,12 +52,28 @@ const blockLoader = (config, suppliedEl) => {
     const loadElement = async (element) => {
         const { blockSelect } = element.dataset;
         const block = config.blocks[blockSelect];
-
-        if (!block.loaded) {
-            addStyle(`${block.location}${block.styles}`);
+        // Load any block dependencies
+        if (block.deps) {
+            block.deps.forEach(async (dep) => {
+                const depConfig = config.deps[dep];
+                if (!depConfig.loaded) {
+                    addDep(depConfig);
+                }
+            });
         }
 
-        block.loaded = initJs(element, block);
+        // Inject CSS
+        if (!block.loaded && block.styles) {
+            addStyle(`${block.location}${block.styles}`);
+        }
+        // Run JS against element
+        block.loaded = await initJs(element, block);
+    };
+
+    const sanitizeClass = (element) => {
+        let { className } = element;
+        className = text.slice(0, -1);
+        return className.split('--');
     };
 
     /**
@@ -54,47 +91,35 @@ const blockLoader = (config, suppliedEl) => {
     };
 
     /**
-     * Clean up variant classes
-     * Ex: marquee--small--contained- -> marquee small contained
-     * @param {HTMLElement} parent
-     */
-    const cleanVariations = (parent) => {
-        const variantBlocks = parent.querySelectorAll('[class$="-"]');
-        variantBlocks.forEach((variant) => {
-            let { className } = variant;
-            className = className.slice(0, -1);
-            // eslint-disable-next-line no-param-reassign
-            variant.className = '';
-            const classNames = className.split('--');
-            variant.classList.add(...classNames);
-        });
-    };
-
-    /**
-     * Load blocks
+     * Lazily load blocks using an Intersection Observer.
      * @param {HTMLElement} element
      */
     const init = (element) => {
         const isDoc = element instanceof HTMLDocument;
         const parent = isDoc ? document.querySelector('body') : element;
-        const lazyLoad = isDoc && config.lazy;
 
-        cleanVariations(parent);
-
-        let observer;
-        if (lazyLoad) {
-            const options = { rootMargin: config.margin || '1000px 0px' };
-            observer = new IntersectionObserver(onIntersection, options);
-        }
+        const options = { rootMargin: config.margin || '1000px 0px' };
+        const observer = new IntersectionObserver(onIntersection, options);
 
         Object.keys(config.blocks).forEach((selector) => {
             const elements = parent.querySelectorAll(selector);
             elements.forEach((el) => {
                 el.setAttribute('data-block-select', selector);
-                if (lazyLoad) {
-                    observer.observe(el);
-                } else {
+
+                // Assumes "Marquee (Small, Contained)" turns into "marquee--small--contained-"
+                const blockVariant = el.className[el.className.length -1] === '-';
+                if (blockVariant) {
+                    let { className } = el;
+                    className = text.slice(0, -1);
+                    el.className = '';
+                    const classNames = className.split('--');
+                    el.classList.add(...classNames);
+                }
+
+                if (!isDoc || config.eager) {
                     loadElement(el);
+                } else {
+                    observer.observe(el);
                 }
             });
         });
@@ -135,7 +160,6 @@ const blockLoader = (config, suppliedEl) => {
 };
 
 const config = {
-    lazy: true,
     margin: '100px 0px',
     blocks: {
         'header': {
@@ -155,6 +179,10 @@ const config = {
             location: '/blocks/embed/',
             styles: 'youtube.css',
             scripts: 'youtube.js',
+        },
+        '.accordion': {
+            location: '/blocks/accordion/',
+            styles: 'styles.css',
         }
     },
 };
