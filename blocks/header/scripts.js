@@ -1,5 +1,5 @@
 const LOCAL_DOMAIN = 'https://local.page';
-const NAV_PATHNAME = '/nav.html';
+const NAV_PATHNAME = '/nav';
 const {
     protocol,
     hostname,
