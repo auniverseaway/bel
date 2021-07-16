@@ -140,12 +140,12 @@ const config = {
     blocks: {
         'header': {
             location: '/blocks/header/',
-            styles: 'styles.css',
-            scripts: 'scripts.js',
+            styles: 'header.css',
+            scripts: 'header.js',
         },
         'footer': {
             location: '/blocks/footer/',
-            styles: 'styles.css',
+            styles: 'footer.css',
         },
         'a[href^="https://www.youtube.com"]': {
             location: '/blocks/embed/',
