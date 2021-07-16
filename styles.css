@@ -99,6 +99,15 @@ main a {
 img {
     max-width: 100%;
 }
+
+[data-block-select] {
+    opacity: 0;
+    transition: opacity 200ms;
+}
+
+[data-block-select].is-Loaded {
+    opacity: 1;
+}
 /* End General Styles */
 
 /* Header */
@@ -224,7 +233,7 @@ a[href^="https://www.youtube.com"] {
 .fragment {
     visibility: hidden;
     opacity: 0;
-    transition: opacity 400ms;
+    transition: opacity 200ms;
 }
 
 .fragment.is-Visible {
