@@ -143,10 +143,6 @@ const config = {
             styles: 'styles.css',
             scripts: 'scripts.js',
         },
-        '.home-hero': {
-            location: '/blocks/home-hero/',
-            styles: 'styles.css',
-        },
         'footer': {
             location: '/blocks/footer/',
             styles: 'styles.css',
