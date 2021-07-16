@@ -81,7 +81,7 @@
 /* General Styles */
 body {
     margin: 0px;
-    font-family: GothamPro;
+    font-family: GothamPro, sans-serif;
     line-height: 1.6;
     color: #424242;
 }
