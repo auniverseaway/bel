@@ -51,6 +51,45 @@ const insertNav = (nav) => {
     header.insertBefore(nav, header.firstChild);
 };
 
+const activateSubNav = (subNavPair) => {
+    subNavPair.forEach((subnav) => {
+        const { link, nav } = subnav;
+
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (!link.classList.contains('is-Active')) {
+                // Turn off all navs
+                subNavPair.forEach((pair) => {
+                    pair.link.classList.remove('is-Active');
+                    pair.nav.classList.remove('is-Active');
+                });
+                // Turn on the current nav
+                link.classList.toggle('is-Active');
+                nav.classList.toggle('is-Active');
+            } else {
+                link.classList.remove('is-Active');
+                nav.classList.remove('is-Active');
+            }
+        });
+    });
+};
+
+const setupSubNav = (nav) => {
+    const mainLinks = nav.querySelectorAll(':scope > ul:first-of-type > li > a');
+    const subNav = Array.from(mainLinks).reduce((acc, link) => {
+        const nextEl = link.nextElementSibling;
+        if (nextEl && nextEl.tagName === 'UL') {
+            acc.push({
+                link,
+                nav: nextEl,
+            });
+        }
+        return acc;
+        
+    }, []);
+    activateSubNav(subNav);
+};
+
 const init = async () => {
     if (isNav()) {
         const html = await fetchNavHtml();
@@ -59,6 +98,7 @@ const init = async () => {
             const nav = getLocalNav(doc);
             setDomainNav(nav);
             insertNav(nav);
+            setupSubNav(nav);
         }
     }
 };
