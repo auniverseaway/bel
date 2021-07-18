@@ -75,7 +75,7 @@ const activateSubNav = (subNavPair) => {
 };
 
 const setupSubNav = (nav) => {
-    const mainLinks = nav.querySelectorAll(':scope > ul:first-of-type > li > a');
+    const mainLinks = nav.querySelectorAll('ul:first-of-type > li > a');
     const subNav = Array.from(mainLinks).reduce((acc, link) => {
         const nextEl = link.nextElementSibling;
         if (nextEl && nextEl.tagName === 'UL') {
@@ -90,6 +90,14 @@ const setupSubNav = (nav) => {
     activateSubNav(subNav);
 };
 
+const setupMobileNav = (nav) => {
+    const mobileLink = nav.querySelector('ul:first-of-type > li:first-of-type > a');
+    mobileLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.target.closest('ul').classList.toggle('is-Active');
+    });
+};
+
 const init = async () => {
     if (isNav()) {
         const html = await fetchNavHtml();
@@ -99,6 +107,7 @@ const init = async () => {
             setDomainNav(nav);
             insertNav(nav);
             setupSubNav(nav);
+            setupMobileNav(nav);
         }
     }
 };
