@@ -8,8 +8,7 @@ footer nav {
     max-width: 83.4%;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-column-gap: 24px;
+    grid-gap: 24px;
 }
 
 footer p {
@@ -38,6 +37,12 @@ footer #equality-at-work a {
     display: block;
     text-indent: -1000px;
     overflow: hidden;
+}
+
+@media only screen and (min-width: 1200px) {
+    footer nav {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
 @media only screen and (min-width: 1440px) {
