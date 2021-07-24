@@ -180,6 +180,7 @@ const config = {
         'footer': {
             location: '/blocks/footer/',
             styles: 'footer.css',
+            scripts: 'footer.js',
         },
         'a[href^="https://www.youtube.com"]': {
             location: '/blocks/embed/',

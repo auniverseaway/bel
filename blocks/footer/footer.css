@@ -1,4 +1,47 @@
 footer {
     background: #292929;
+    color: #d5d5d5;
     padding: 50px;
+}
+
+footer nav {
+    max-width: 83.4%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 24px;
+}
+
+footer p {
+    margin: 0;
+}
+
+footer a {
+    color: #d5d5d5;
+    text-decoration: none;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+footer h4 {
+    margin: 0;
+}
+
+footer #equality-at-work a {
+    background: url(/img/bel-logo.svg);
+    width: 100px;
+    height: 100px;
+    display: block;
+    text-indent: -1000px;
+    overflow: hidden;
+}
+
+@media only screen and (min-width: 1440px) {
+    footer nav {
+        max-width: 1200px;
+    }
 }

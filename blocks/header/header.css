@@ -1,15 +1,15 @@
-nav {
+header nav {
     max-width: 83.4%;
     margin: 0 auto;
     height: 80px;
 }
 
-nav > p {
+header nav > p {
     margin: 0;
     padding: 20px 0px;
 }
 
-nav > p > a {
+header nav > p > a {
     display: block;
     background: url(/img/eu-logo.svg) no-repeat;
     overflow: hidden;
@@ -21,7 +21,7 @@ nav > p > a {
     width: 160px;
 }
 
-nav > ul {
+header nav > ul {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -32,7 +32,7 @@ nav > ul {
     background: #fbfbfb;
 }
 
-nav > ul > li:first-of-type {
+header nav > ul > li:first-of-type {
     content: '';
     font-size: 40px;
     width: 80px;
@@ -48,7 +48,7 @@ nav > ul > li:first-of-type {
     text-indent: 1000px;
 }
 
-nav > ul.is-Active > li:first-of-type {
+header nav > ul.is-Active > li:first-of-type {
     animation: isActive 200ms;
     animation-fill-mode: forwards;
 }
@@ -57,7 +57,7 @@ nav > ul.is-Active > li:first-of-type {
     100% { transform: rotate(-90deg); }
 }
 
-nav > ul > li:first-of-type a {
+header nav > ul > li:first-of-type a {
     margin: 0;
     line-height: 0;
     display: block;
@@ -67,20 +67,20 @@ nav > ul > li:first-of-type a {
     opacity: 0;
 }
 
-nav > ul > li:first-of-type a:after {
+header nav > ul > li:first-of-type a:after {
     all: unset;
 }
 
-nav > ul > li {
+header nav > ul > li {
     display: none;
 }
 
-nav > ul.is-Active > li {
+header nav > ul.is-Active > li {
     display: block;
 }
 
-nav > ul > li:hover > a:after,
-nav > ul > li > a.is-Active:after {
+header nav > ul > li:hover > a:after,
+header nav > ul > li > a.is-Active:after {
     content: '';
     height: 3px;
     display: block;
@@ -92,16 +92,16 @@ nav > ul > li > a.is-Active:after {
     bottom: 0px;
 }
 
-nav > ul.is-Active > li:not(:first-of-type) {
+header nav > ul.is-Active > li:not(:first-of-type) {
     position: relative;
 }
 
-nav a {
+header nav a {
     color: #424242;
     text-decoration: none;
 }
 
-nav > ul > li > a {
+header nav > ul > li > a {
     display: block;
     max-width: 83.4%;
     margin: 0 auto;
@@ -109,18 +109,18 @@ nav > ul > li > a {
 }
 
 /* Subnav */
-nav > ul > li > ul {
+header nav > ul > li > ul {
     display: none;
     padding: 6px 0;
     background: #f6f6f6;
     list-style: none;
 }
 
-nav > ul > li > ul.is-Active {
+header nav > ul > li > ul.is-Active {
     display: block;
 }
 
-nav > ul > li > ul a {
+header nav > ul > li > ul a {
     line-height: 44px;
     display: block;
     max-width: 83.4%;
@@ -128,37 +128,37 @@ nav > ul > li > ul a {
 }
 
 @media only screen and (min-width: 1200px) {
-    nav {
+    header nav {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
 
-    nav > ul {
+    header nav > ul {
         display: flex;
         height: 80px;
         position: static;
         background: none;
     }
 
-    nav > ul > li:first-of-type {
+    header nav > ul > li:first-of-type {
         display: none;
     }
 
-    nav > ul > li,
-    nav > ul.is-Active > li {
+    header nav > ul > li,
+    header nav > ul.is-Active > li {
         position: relative;
         display: flex;
         align-items: center;
     }
 
-    nav > ul > li > a {
+    header nav > ul > li > a {
         margin: 0 0 0 24px;
         display: inline;
         position: relative;
     }
 
-    nav > ul > li > ul {
+    header nav > ul > li > ul {
         display: none;
         position: absolute;
         padding: 24px;
@@ -166,12 +166,12 @@ nav > ul > li > ul a {
         top: 80px;
     }
 
-    nav > ul > li > ul a {
+    header nav > ul > li > ul a {
         all: unset;
     }
 
-    nav > ul > li:hover > a:after,
-    nav > ul > li > a.is-Active:after {
+    header nav > ul > li:hover > a:after,
+    header nav > ul > li > a.is-Active:after {
         left: unset;
         right: unset;
         bottom: 6px;
@@ -180,7 +180,7 @@ nav > ul > li > ul a {
 }
 
 @media only screen and (min-width: 1440px) {
-    nav {
+    header nav {
         max-width: 1200px;
     }
 }
