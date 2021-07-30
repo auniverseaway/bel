@@ -13,4 +13,4 @@ jobs:
     
     steps:
       - name: Use local PSI action
-      - uses: auniverseaway/helix-actions/psi@main
+        uses: auniverseaway/helix-actions/psi@main
