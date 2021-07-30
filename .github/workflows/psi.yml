@@ -1,6 +1,9 @@
 name: Run Helix PSI Audit
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     types: [opened, synchronize, reopened, edited]
     branches:
@@ -14,6 +17,6 @@ jobs:
     steps:
       - uses: auniverseaway/helix-actions@main
       - name: Use local PSI action
-        uses: ./psi
+        working-directory: ./psi
         with:
           psi-key: ${{ secrets.PSI_KEY }}
