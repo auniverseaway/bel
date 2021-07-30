@@ -12,7 +12,7 @@ jobs:
 
     
     steps:
-      - uses: auniverseaway/helix-actions/psi@main
       - name: Use local PSI action
+      - uses: auniverseaway/helix-actions/psi@main
         with:
           psi-key: ${{ secrets.PSI_KEY }}
