@@ -13,3 +13,5 @@ jobs:
     steps:
       - name: Use Helix PSI action
         uses: auniverseaway/helix-actions/psi@main
+        with:
+          psi-key: ${{ secrets.PSI_KEY }}
