@@ -10,8 +10,7 @@ jobs:
   action:
     runs-on: ubuntu-latest
 
+
     steps:
-      - name: Use Helix PSI action
+      - name: Use local PSI action
         uses: auniverseaway/helix-actions/psi@main
-        with:
-          psi-key: ${{ secrets.PSI_KEY }}
