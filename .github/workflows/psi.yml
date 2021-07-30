@@ -15,6 +15,7 @@ jobs:
 
     
     steps:
-      - uses: auniverseaway/helix-actions@main
+      - uses: auniverseaway/helix-actions/psi@main
       - name: Use local PSI action
-        working-directory: ./psi
+        with:
+          psi-key: ${{ secrets.PSI_KEY }}
