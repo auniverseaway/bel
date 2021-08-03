@@ -12,6 +12,6 @@ jobs:
 
     steps:
       - name: Use repo PSI action
-        uses: auniverseaway/helix-actions/psi@main
+        uses: auniverseaway/helix-actions/psi@refactor
         with:
           psi-key: ${{ secrets.PSI_KEY }}
