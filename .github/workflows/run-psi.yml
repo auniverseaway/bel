@@ -15,4 +15,3 @@ jobs:
         uses: auniverseaway/helix-actions-psi@main
         with:
           psi-key: ${{ secrets.PSI_KEY }}
-          lcp: 0.1
