@@ -254,30 +254,30 @@ h2 {
     row-gap: 48px;
 }
 
-.two-columns > div > div:last-of-type p {
+.equality-bullets .two-columns > div > div:last-of-type p {
     width: 100%;
     position: relative;
 }
 
-.two-columns > div > div:last-of-type p:last-of-type {
+.equality-bullets .two-columns > div > div:last-of-type p:last-of-type {
     justify-content: center;
     display: inline-flex;
     flex-wrap: wrap;
     gap: 12px;
 }
 
-ol {
+.equality-bullets ol {
     counter-reset: section;
     list-style-type: none;
     padding-left: 60px;
 }
 
-ol li {
+.equality-bullets ol li {
     position: relative;
     margin-bottom: 22px;
 }
 
-ol li:before {
+.equality-bullets ol li:before {
     counter-increment: section;
     content: counter(section);
     color: #ec008c;
