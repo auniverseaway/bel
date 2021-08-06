@@ -206,22 +206,22 @@ header {
     }
 }
 
-/* Aside for homepage */
-.aside {
+/* equality-bullets for homepage */
+.equality-bullets {
     padding: 56px 0;
 }
 
 /* Heading */
-.aside > div:first-of-type {
+.equality-bullets > div:first-of-type {
     text-align: center;
     margin: 0 auto;
 }
 
-.aside > div:first-of-type p {
+.equality-bullets > div:first-of-type p {
     margin: 0 0 36px 0;
 }
 
-.aside > div:first-of-type > div:last-of-type {
+.equality-bullets > div:first-of-type > div:last-of-type {
     display: none;
 }
 
@@ -230,14 +230,14 @@ h2 {
     margin: 0;
 }
 
-.aside > div:last-of-type > div:last-of-type {
+.equality-bullets > div:last-of-type > div:last-of-type {
     display: flex;
     flex-wrap: wrap;
     align-content: center;
     justify-content: center;
 }
 
-.aside > div > div:last-of-type {
+.equality-bullets > div > div:last-of-type {
     position: relative;
     display: flex;
     justify-content: center;
