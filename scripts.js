@@ -89,10 +89,10 @@ const loadBlocks = (config, suppliedEl) => {
     const cleanVariations = (parent) => {
         const variantBlocks = parent.querySelectorAll('[class$="-"]');
         variantBlocks.forEach((variant) => {
-            let { className } = variant;
-            className = className.slice(0, -1);
+            const { className } = variant;
+            const classNameClipped = className.slice(0, -1);
             variant.classList.remove(className);
-            const classNames = className.split('--');
+            const classNames = classNameClipped.split('--');
             variant.classList.add(...classNames);
         });
     };
@@ -208,10 +208,6 @@ const config = {
             location: '/blocks/footer/',
             styles: 'footer.css',
             scripts: 'footer.js',
-        },
-        '.equality-bullets': {
-            location: '/blocks/eu-way/',
-            styles: 'eu-way.css',
         },
         'a[href^="https://www.youtube.com"]': {
             location: '/blocks/embed/',

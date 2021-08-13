@@ -101,7 +101,6 @@ header {
 }
 
 /* Home Hero */
-
 .home-hero {
     border-radius: 12px;
     overflow: hidden;
@@ -114,14 +113,17 @@ header {
     display: block;
 }
 
-/* Start Paste */
-
 .home-hero h1 {
     position: relative;
     font-size: 30px;
     text-transform: uppercase;
     line-height: 1;
     margin: 0;
+}
+
+.home-hero > div:last-child {
+    display: flex;
+    position: relative;
 }
 
 .home-hero > div:last-child > div:first-of-type {
@@ -132,11 +134,6 @@ header {
     flex: 1 1 70%;
 }
 
-.home-hero > div:last-child {
-    display: flex;
-    position: relative;
-}
-
 .home-hero > div:last-child > div:last-of-type {
     background: rgba(0,0,0,.3);
     border-radius: 0;
@@ -145,11 +142,6 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.home-hero > div:last-child > div:last-of-type > a {
-    width: 82px;
-    padding-top: 88px;
 }
 
 .home-hero > div:last-child > div:first-of-type:before {
@@ -163,8 +155,6 @@ header {
     background: url(/img/blob-home-hero.svg) no-repeat;
     opacity: 60%;
 }
-
-/* End Paste */
 
 .home-hero > div:last-child > div > p {
     margin: 0;
@@ -181,6 +171,112 @@ header {
     text-decoration: none;
     padding-top: 116px;
 }
+/* Home Hero End */
+
+/* EU Way List */
+.equality-way-list {
+    margin: 0 0 12px;
+    padding: 80px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: linear-gradient(45deg, rgba(183,4,98,0.15) 0%, rgba(227,78,59,0.15) 100%);
+}
+
+.equality-way-list > div {
+    max-width: 83.4%;
+    margin: 0 auto;
+}
+
+.equality-way-list h2 {
+    text-transform: uppercase;
+    font-size: 40px;
+    width: 300px;
+    line-height: 1;
+    margin: 0;
+    position: relative;
+}
+
+.equality-way-list > div > div:first-of-type:before {
+    background: url('/img/blob-equality-way-list.svg') no-repeat;
+    content: '';
+    display: block;
+    width: 460px;
+    height: 490px;
+    position: absolute;
+    left: -60px;
+    top: -100px;
+}
+
+.equality-way-list > div > div:first-of-type {
+    color: #FFF;
+    position: relative;
+}
+
+.equality-way-list ol {
+    list-style: none;
+    margin: 144px 0 0 0;
+    padding: 0 0 0 48px;
+    counter-reset: section;
+}
+
+.equality-way-list li {
+    margin-bottom: 32px;
+    position: relative;
+}
+
+.equality-way-list li:last-child {
+    margin-bottom: 0;
+}
+
+.equality-way-list ol li:before {
+    counter-increment: section;
+    content: counter(section);
+    color: #ffffff;
+    position: absolute;
+    left: -64px;
+    font-size: 64px;
+    top: 0;
+    line-height: 1;
+    width: 48px;
+    text-align: right;
+    font-weight: 700;
+}
+
+@media only screen and (min-width: 600px) {
+    .equality-way-list {
+        padding: 100px 0px;
+        margin: 0 0 24px;
+    }
+
+    .equality-way-list > div {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+    }
+
+    .equality-way-list > div > div:first-of-type:before {
+        width: 545px;
+        top: -144px;
+    }
+
+    .equality-way-list h2 + p {
+        position: relative;
+        width: 400px;
+    }
+
+    .equality-way-list ol {
+        margin: 0;
+        padding: 0 0 0 100px;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .equality-way-list > div {
+        max-width: 1200px;
+    }
+}
+/* EU Way List End */
+
 
 @media only screen and (min-width: 600px) {
     body {
