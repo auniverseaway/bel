@@ -209,6 +209,10 @@ const config = {
             styles: 'footer.css',
             scripts: 'footer.js',
         },
+        '.equality-bullets': {
+            location: '/blocks/eu-way/',
+            styles: 'eu-way.css',
+        },
         'a[href^="https://www.youtube.com"]': {
             location: '/blocks/embed/',
             styles: 'youtube.css',
