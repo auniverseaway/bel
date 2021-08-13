@@ -1,22 +1,10 @@
-const LOCAL_DOMAIN = 'https://local.page';
 const NAV_PATHNAME = '/nav';
-const {
-    protocol,
-    hostname,
-    port,
-    pathname,
-} = window.location;
-
-const getDomain = () => {
-    const domain = `${protocol}//${hostname}`;
-    return port ? `${domain}:${port}` : domain;
-};
-const CURRENT_DOMAIN = getDomain();
+const { pathname } = window.location;
 
 const isNav = () => pathname !== NAV_PATHNAME;
 
 const fetchNavHtml = async () => {
-    const resp = await fetch(`${CURRENT_DOMAIN}${NAV_PATHNAME}`);
+    const resp = await fetch(`${NAV_PATHNAME}`);
     if (resp.ok) {
         return resp.text();
     }
@@ -33,17 +21,6 @@ const getLocalNav = (doc) => {
     const navEl = document.createElement('nav');
     navEl.innerHTML = navContent;
     return navEl;
-};
-
-const setDomainNav = (nav) => {
-    const anchors = nav.getElementsByTagName('a');
-    Array.from(anchors).forEach((anchor) => {
-        const { href } = anchor;
-        if (href.includes(LOCAL_DOMAIN)) {
-            anchor.href = href.replace(LOCAL_DOMAIN, CURRENT_DOMAIN);
-        }
-    });
-    return nav;
 };
 
 const insertNav = (nav) => {
@@ -98,13 +75,13 @@ const setupMobileNav = (nav) => {
     });
 };
 
-const init = async () => {
+const init = async (el, { setDomain }) => {
     if (isNav()) {
         const html = await fetchNavHtml();
         if (html) {
             const doc = await getNavDoc(html);
             const nav = getLocalNav(doc);
-            setDomainNav(nav);
+            setDomain(nav);
             insertNav(nav);
             setupSubNav(nav);
             setupMobileNav(nav);
