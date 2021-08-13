@@ -1,3 +1,28 @@
+const LIVE_DOMAIN = 'https://equalityatwork.com';
+const {
+    protocol,
+    hostname,
+    port,
+    pathname,
+} = window.location;
+
+const getDomain = () => {
+    const domain = `${protocol}//${hostname}`;
+    return port ? `${domain}:${port}` : domain;
+};
+const currentDomain = getDomain();
+
+const setDomain = (element) => {
+    const anchors = element.getElementsByTagName('a');
+    Array.from(anchors).forEach((anchor) => {
+        const { href } = anchor;
+        if (href.includes(LIVE_DOMAIN)) {
+            anchor.href = href.replace(LIVE_DOMAIN, currentDomain);
+        }
+    });
+    return element;
+};
+
 const getMetadata = (name) => {
     const meta = document.head.querySelector(`meta[name="${name}"]`);
     return meta && meta.content;
@@ -45,7 +70,7 @@ const loadBlocks = (config, suppliedEl) => {
             }
             // If this block type has scripts and they're already imported
             if (block.module) {
-                block.module.default(element, { addStyle });
+                block.module.default(element, { addStyle, setDomain });
             }
         }
         element.classList.add('is-Loaded');
@@ -104,21 +129,16 @@ const loadBlocks = (config, suppliedEl) => {
     const init = (element) => {
         const isDoc = element instanceof HTMLDocument;
         const parent = isDoc ? document.querySelector('body') : element;
-        const lazyLoad = isDoc && config.lazy;
-
         cleanVariations(parent);
 
-        let observer;
-        if (lazyLoad) {
-            const options = { rootMargin: config.margin || '1000px 0px' };
-            observer = new IntersectionObserver(onIntersection, options);
-        }
+        const options = { rootMargin: config.lazyMargin || '1000px 0px' };
+        const observer = new IntersectionObserver(onIntersection, options);
 
-        Object.keys(config.blocks).forEach((selector) => {
-            const elements = parent.querySelectorAll(selector);
+        Object.keys(config.blocks).forEach((block) => {
+            const elements = parent.querySelectorAll(block);
             elements.forEach((el) => {
-                el.setAttribute('data-block-select', selector);
-                if (lazyLoad) {
+                el.setAttribute('data-block-select', block);
+                if (config.blocks[block].lazy) {
                     observer.observe(el);
                 } else {
                     loadElement(el);
@@ -142,6 +162,7 @@ const loadBlocks = (config, suppliedEl) => {
             fragmentEl.insertAdjacentHTML('beforeend', html);
             fragmentEl.querySelector('div').remove();
             fragmentEl.classList.add('is-Visible');
+            setDomain(fragmentEl);
             init(fragmentEl);
         }
     };
@@ -196,8 +217,7 @@ const setLCPTrigger = () => {
 };
 
 const config = {
-    lazy: true,
-    margin: '100px 0px',
+    lazyMargin: '200px 0px',
     blocks: {
         'header': {
             location: '/blocks/header/',
@@ -205,11 +225,13 @@ const config = {
             scripts: 'header.js',
         },
         'footer': {
+            lazy: true,
             location: '/blocks/footer/',
             styles: 'footer.css',
             scripts: 'footer.js',
         },
         'a[href^="https://www.youtube.com"]': {
+            lazy: true,
             location: '/blocks/embed/',
             styles: 'youtube.css',
             scripts: 'youtube.js',
@@ -221,6 +243,7 @@ const config = {
         }
     }
 };
+setDomain(document);
 setLCPTrigger();
 loadTemplate(config);
 loadBlocks(config);
