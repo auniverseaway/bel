@@ -147,9 +147,15 @@ picture {
 }
 
 .home-hero > div:last-child > div:first-of-type:before {
+    content: '';
     width: 160px;
+    height: 153px;
     left: 0;
     top: -60px;
+    display: block;
+    position: absolute;
+    background: url(/img/blob-home-hero.svg) no-repeat;
+    opacity: 60%;
 }
 
 /* End Paste */
