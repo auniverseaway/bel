@@ -1,0 +1,27 @@
+.social-links a {
+    display: block;
+    height: 40px;
+    text-indent: -1000px;
+    overflow: hidden;
+}
+
+footer .social-links a[href^="https://www.instagram.com"] {
+    background: url('/img/logo-white-instagram.svg') no-repeat;
+    width: 40px;
+}
+
+footer .social-links a[href^="https://www.facebook.com"] {
+    background: url('/img/logo-white-facebook.svg') no-repeat;
+    width: 41px;
+}
+
+footer .social-links a[href^="https://twitter.com"] {
+    background: url('/img/logo-white-twitter.svg') no-repeat;
+    width: 50px;
+}
+
+.social-links > div > div {
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+}

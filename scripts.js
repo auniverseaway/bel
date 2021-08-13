@@ -1,10 +1,5 @@
 const LIVE_DOMAIN = 'https://equalityatwork.com';
-const {
-    protocol,
-    hostname,
-    port,
-    pathname,
-} = window.location;
+const { protocol, hostname, port, pathname } = window.location;
 
 const getDomain = () => {
     const domain = `${protocol}//${hostname}`;
@@ -20,7 +15,6 @@ const setDomain = (element) => {
             anchor.href = href.replace(LIVE_DOMAIN, currentDomain);
         }
     });
-    return element;
 };
 
 const getMetadata = (name) => {
@@ -235,7 +229,12 @@ const config = {
             location: '/blocks/embed/',
             styles: 'youtube.css',
             scripts: 'youtube.js',
-        }
+        },
+        '.social-links': {
+            lazy: true,
+            location: '/blocks/social/',
+            styles: 'social.css',
+        },
     },
     templates: {
         'DEI Resource': {

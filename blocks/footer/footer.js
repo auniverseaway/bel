@@ -1,5 +1,4 @@
-const LOCAL_DOMAIN = 'https://local.page';
-const FOOTER_PATHNAME = '/footer-links';
+const FOOTER_PATHNAME = '/nav-footer';
 const {
     protocol,
     hostname,
@@ -7,14 +6,8 @@ const {
     pathname,
 } = window.location;
 
-const getDomain = () => {
-    const domain = `${protocol}//${hostname}`;
-    return port ? `${domain}:${port}` : domain;
-};
-const CURRENT_DOMAIN = getDomain();
-
 const fetchNavHtml = async () => {
-    const resp = await fetch(`${CURRENT_DOMAIN}${FOOTER_PATHNAME}`);
+    const resp = await fetch(`${FOOTER_PATHNAME}`);
     if (resp.ok) {
         return resp.text();
     }
@@ -33,17 +26,6 @@ const getLocalNav = (doc) => {
     return navEl;
 };
 
-const setDomainNav = (nav) => {
-    const anchors = nav.getElementsByTagName('a');
-    Array.from(anchors).forEach((anchor) => {
-        const { href } = anchor;
-        if (href.includes(LOCAL_DOMAIN)) {
-            anchor.href = href.replace(LOCAL_DOMAIN, CURRENT_DOMAIN);
-        }
-    });
-    return nav;
-};
-
 const insertNav = (nav) => {
     const header = document.querySelector('footer');
     header.insertBefore(nav, header.firstChild);
@@ -51,13 +33,13 @@ const insertNav = (nav) => {
 
 const isFooter = () => pathname !== FOOTER_PATHNAME;
 
-const init = async () => {
+const init = async (el, { setDomain }) => {
     if (isFooter()) {
         const html = await fetchNavHtml();
         if (html) {
             const doc = await getNavDoc(html);
             const nav = getLocalNav(doc);
-            setDomainNav(nav);
+            setDomain(nav);
             insertNav(nav);
         }
     }

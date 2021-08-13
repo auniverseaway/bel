@@ -1,4 +1,4 @@
-const NAV_PATHNAME = '/nav';
+const NAV_PATHNAME = '/nav-header';
 const { pathname } = window.location;
 
 const isNav = () => pathname !== NAV_PATHNAME;
