@@ -94,6 +94,12 @@ picture {
     display: block;
 }
 
+/* Header Placeholder */
+header {
+    min-height: 40px;
+    margin: 0 0px 12px 12px;
+}
+
 /* Home Hero */
 
 .home-hero {
