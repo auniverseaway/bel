@@ -1,10 +1,5 @@
 const FOOTER_PATHNAME = '/nav-footer';
-const {
-    protocol,
-    hostname,
-    port,
-    pathname,
-} = window.location;
+const { pathname } = window.location;
 
 const fetchNavHtml = async () => {
     const resp = await fetch(`${FOOTER_PATHNAME}`);
