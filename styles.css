@@ -243,6 +243,10 @@ header {
 }
 
 @media only screen and (min-width: 600px) {
+    header {
+        margin: 0 24px 24px 24px;
+    }
+
     .equality-way-list {
         padding: 100px 0px;
         margin: 0 0 24px;
