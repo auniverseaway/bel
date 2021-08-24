@@ -31,10 +31,6 @@
     right: 0;
 }
 
-.glide-container > button.disabled {
-    opacity: 0.25;
-}
-
 .glider {
     margin: 0 auto;
     position: relative;

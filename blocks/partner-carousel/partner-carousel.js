@@ -11,15 +11,27 @@ const init = async (el) => {
     glideEl.insertAdjacentHTML('beforebegin', previous);
     glideEl.insertAdjacentHTML('afterend', next);
 
+
     new Glider(glideEl, {
-        slidesToShow: 4,
-        slidesToScroll: 4,
-        draggable: true,
+        // Mobile-first defaults
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        scrollLock: true,
         arrows: {
-            prev: '.glider-prev',
-            next: '.glider-next'
-        }
-    });
+          prev: '.glider-prev',
+          next: '.glider-next'
+        },
+        responsive: [
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 'auto',
+              slidesToScroll: 'auto',
+              itemWidth: 300
+            }
+          }
+        ]
+      });
 };
 
 export default init;

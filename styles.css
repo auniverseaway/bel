@@ -326,7 +326,7 @@ header {
 
     /* CTA Section */
     .home-hero > div:last-child > div:last-of-type {
-        background-color: rgba(255, 255, 255, .9);
+        background-color: rgba(80, 80, 80, .9);
         border-radius: 0 12px 12px 0;
         width: 200px;
         flex: unset;
