@@ -1,6 +1,44 @@
 const LIVE_DOMAIN = 'https://equalityatwork.com';
 const { protocol, hostname, port, pathname } = window.location;
 
+const config = {
+    lazyMargin: '200px 0px',
+    blocks: {
+        'header': {
+            location: '/blocks/header/',
+            styles: 'header.css',
+            scripts: 'header.js',
+        },
+        'footer': {
+            location: '/blocks/footer/',
+            styles: 'footer.css',
+            scripts: 'footer.js',
+        },
+        'a[href^="https://www.youtube.com"]': {
+            lazy: true,
+            location: '/blocks/embed/',
+            styles: 'youtube.css',
+            scripts: 'youtube.js',
+        },
+        '.social-links': {
+            lazy: true,
+            location: '/blocks/social/',
+            styles: 'social.css',
+        },
+        '.partner-carousel': {
+            lazy: true,
+            location: '/blocks/partner-carousel/',
+            styles: 'partner-carousel.css',
+            scripts: 'partner-carousel.js',
+        },
+    },
+    templates: {
+        'DEI Resource': {
+
+        }
+    }
+};
+
 const getDomain = () => {
     const domain = `${protocol}//${hostname}`;
     return port ? `${domain}:${port}` : domain;
@@ -189,6 +227,8 @@ const insertGtm = () => {
 };
 
 const postLCP = () => {
+    loadTemplate(config);
+    loadBlocks(config);
     setTimeout(insertGtm, 3000);
 };
 
@@ -209,46 +249,5 @@ const setLCPTrigger = () => {
         postLCP();
     }
 };
-
-const config = {
-    lazyMargin: '200px 0px',
-    blocks: {
-        'header': {
-            location: '/blocks/header/',
-            styles: 'header.css',
-            scripts: 'header.js',
-        },
-        'footer': {
-            lazy: true,
-            location: '/blocks/footer/',
-            styles: 'footer.css',
-            scripts: 'footer.js',
-        },
-        'a[href^="https://www.youtube.com"]': {
-            lazy: true,
-            location: '/blocks/embed/',
-            styles: 'youtube.css',
-            scripts: 'youtube.js',
-        },
-        '.social-links': {
-            lazy: true,
-            location: '/blocks/social/',
-            styles: 'social.css',
-        },
-        '.partner-carousel': {
-            lazy: true,
-            location: '/blocks/partner-carousel/',
-            styles: 'partner-carousel.css',
-            scripts: 'partner-carousel.js',
-        },
-    },
-    templates: {
-        'DEI Resource': {
-
-        }
-    }
-};
 setDomain(document);
 setLCPTrigger();
-loadTemplate(config);
-loadBlocks(config);
