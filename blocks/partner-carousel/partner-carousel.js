@@ -13,11 +13,11 @@ const init = async (el) => {
 
 
     new Glider(glideEl, {
-        // Mobile-first defaults
         slidesToShow: 1,
         slidesToScroll: 1,
         scrollLock: true,
         rewind: true,
+        draggable: true,
         arrows: {
           prev: '.glider-prev',
           next: '.glider-next'
@@ -32,7 +32,7 @@ const init = async (el) => {
             }
           }
         ]
-      });
+    });
 };
 
 export default init;
