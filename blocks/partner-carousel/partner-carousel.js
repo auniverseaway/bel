@@ -17,6 +17,7 @@ const init = async (el) => {
         slidesToShow: 1,
         slidesToScroll: 1,
         scrollLock: true,
+        rewind: true,
         arrows: {
           prev: '.glider-prev',
           next: '.glider-next'
