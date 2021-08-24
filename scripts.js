@@ -235,6 +235,12 @@ const config = {
             location: '/blocks/social/',
             styles: 'social.css',
         },
+        '.partner-carousel': {
+            lazy: true,
+            location: '/blocks/partner-carousel/',
+            styles: 'partner-carousel.css',
+            scripts: 'partner-carousel.js',
+        },
     },
     templates: {
         'DEI Resource': {
