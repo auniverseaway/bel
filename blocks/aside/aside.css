@@ -1,0 +1,62 @@
+.aside {
+    background-color: #f3d7e6;
+    background-image: url('/img/blob-aside-orange.svg');
+    background-size: 1300px;
+    background-repeat: no-repeat;
+    background-position: 50% 40%;
+    padding: 80px 0;
+    border-radius: 12px;
+    margin: 0 0 24px 0;
+    color: #FFF;
+}
+
+.aside > div {
+    display: grid;
+    max-width: 83.4%;
+    margin: 0 auto;
+    gap: 24px;
+}
+
+.aside > div > div {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.aside > div > div:first-of-type {
+    order: 2;
+}
+
+.aside > div > div a {
+    border: 3px solid;
+    line-height: 40px;
+    display: inline-block;
+    padding: 0 12px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #FFF;
+}
+
+.aside h2 {
+    font-weight: 200;
+    text-transform: uppercase;
+    font-size: 40px;
+    line-height: 40px;
+    margin: 0;
+}
+
+.aside p:last-of-type {
+    margin-bottom: 0;
+}
+
+@media only screen and (min-width: 600px) {
+    .aside > div {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .aside > div {
+        max-width: 1200px;
+    }
+}

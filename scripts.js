@@ -31,6 +31,11 @@ const config = {
             styles: 'partner-carousel.css',
             scripts: 'partner-carousel.js',
         },
+        '.aside': {
+            lazy: true,
+            location: '/blocks/aside/',
+            styles: 'aside.css',
+        },
     },
     templates: {
         'DEI Resource': {
