@@ -53,6 +53,10 @@
     .aside > div {
         grid-template-columns: 1fr 1fr;
     }
+
+    .aside > div > div:first-of-type {
+        order: unset;
+    }
 }
 
 @media only screen and (min-width: 1440px) {
