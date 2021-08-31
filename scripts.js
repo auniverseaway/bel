@@ -2,7 +2,7 @@ const LIVE_DOMAIN = 'https://equalityatwork.com';
 const { protocol, hostname, port, pathname } = window.location;
 
 const config = {
-    lazyMargin: '200px 0px',
+    lazyMargin: '600px 0px',
     blocks: {
         'header': {
             location: '/blocks/header/',
@@ -220,6 +220,7 @@ const loadBlocks = (config, suppliedEl) => {
 };
 
 const insertGtm = () => {
+    console.log('gtm');
     const gtm = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
