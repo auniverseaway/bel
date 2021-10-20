@@ -2,7 +2,7 @@ const LIVE_DOMAIN = 'https://equalityatwork.com';
 const { protocol, hostname, port, pathname } = window.location;
 
 const config = {
-    lazyMargin: '600px 0px',
+    lazyMargin: '1200px 0px',
     blocks: {
         'header': {
             location: '/blocks/header/',
@@ -26,7 +26,6 @@ const config = {
             styles: 'social.css',
         },
         '.partner-carousel': {
-            lazy: true,
             location: '/blocks/partner-carousel/',
             styles: 'partner-carousel.css',
             scripts: 'partner-carousel.js',
@@ -35,6 +34,11 @@ const config = {
             lazy: true,
             location: '/blocks/aside/',
             styles: 'aside.css',
+        },
+        '.cta-cards': {
+            lazy: true,
+            location: '/blocks/cta-cards/',
+            styles: 'cta-cards.css',
         },
     },
     templates: {
